@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articulos.cs" />
+    <Compile Include="Errores.cs" />
     <Compile Include="Tauro Autopartes - Balsamo API.cs">
       <SubType>Form</SubType>
     </Compile>

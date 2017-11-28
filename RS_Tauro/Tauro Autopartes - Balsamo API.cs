@@ -42,15 +42,19 @@ namespace RS_Tauro
                     request.AddParameter("application/x-www-form-urlencoded", "cliente=2222&articulo=" + _artParam + "&apikey=f71ww547-ee22-2ftgd-987f-55557f0f3rr8f-CL-2222", ParameterType.RequestBody);
                     IRestResponse response = client.Execute(request);
 
+                    var json = response.Content;
+                    Errores _error = Newtonsoft.Json.JsonConvert.DeserializeObject<Errores>(json);
                     //dynamic _artweb = Newtonsoft.Json.JsonConvert.DeserializeObject(_txt);
                     //var _desc = _artweb.
-                    Articulos  _artweb = Newtonsoft.Json.JsonConvert.DeserializeObject<Articulos>(response.Content.ToString());
+                    Articulos _artweb = Newtonsoft.Json.JsonConvert.DeserializeObject<Articulos>(json);
 
                     
 
-                    exp_file.WriteLine(_artweb.ToString() + Environment.NewLine);
+                    exp_file.WriteLine(response.Content.ToString() + Environment.NewLine);
 
-
+                    if (_artParam == "805578-L")
+                    { break;
+                    }
                 }
             }
         }
