@@ -8,7 +8,7 @@ namespace RS_Tauro
 {
     public class Errores
     {
-        string _errorcodigo { get; set; }
-        string _errormensaje { get; set; }
+        public string _errorcodigo { get; set; }
+        public string _errormensaje { get; set; }
     }
 }

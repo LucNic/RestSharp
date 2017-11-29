@@ -8,10 +8,10 @@ namespace RS_Tauro
 {
     public class Articulos
     {
-        string _descripcion { get; set; }
-        string _artcodigo { get; set; }
-        string _original { get; set; }
-        string _rubro { get; set; }
-        int _costo { get; set; }
+        public string _descripcion { get; set; }
+        public string _artcodigo { get; set; }
+        public string _original { get; set; }
+        public string _rubro { get; set; }
+        public int _costo { get; set; }
     }
 }
