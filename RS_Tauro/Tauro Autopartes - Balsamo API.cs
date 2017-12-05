@@ -61,18 +61,23 @@ namespace RS_Tauro
                             {
                                 case "5002":
                                     lblMensaje.Text = _errmsj;
+                                    _countError++;
                                     break;
                                 case "5003":
                                     lblMensaje.Text = _errmsj;
+                                    _countError++;
                                     break;
                                 case "5004":
                                     lblMensaje.Text = _errmsj;
+                                    _countError++;
                                     break;
                                 case "5005":
                                     lblMensaje.Text = _errmsj;
+                                    _countError++;
                                     break;
                                 case "5006":
                                     lblMensaje.Text = _errmsj;
+                                    _countError++;
                                     break;
                             }
                         }
@@ -86,12 +91,15 @@ namespace RS_Tauro
 
                             exp_file.WriteLine(_descrip + ";" + _arti + ";" + _ori + ";" + _rub + ";" + _cost + ";" + Environment.NewLine);
                         }
+
+                        if (lblMensaje.Text == "")
+                        {
+                            lblMensaje.Text = "DESCARGA FINALIZADA";
+                        }
+                        
                     }
 
-                    if (lblMensaje.Text == "")
-                    {
-                        lblMensaje.Text = "DESCARGA FINALIZADA";
-                    }
+                   
                     else
                     {
                         break;
