@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnDescargar = new System.Windows.Forms.Button();
             this.lblMensaje = new System.Windows.Forms.Label();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnDescargar
@@ -54,6 +56,10 @@
             this.lblMensaje.TabIndex = 1;
             this.lblMensaje.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // timer
+            // 
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -72,6 +78,7 @@
 
         private System.Windows.Forms.Button btnDescargar;
         private System.Windows.Forms.Label lblMensaje;
+        private System.Windows.Forms.Timer timer;
     }
 }
 
