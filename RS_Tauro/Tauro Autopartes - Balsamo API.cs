@@ -23,34 +23,38 @@ namespace RS_Tauro
         }
 
         string[] _listadoTauro;
-        public StreamWriter exp_file = new StreamWriter(@"C:\temp\BalsamoWeb.txt");
+        public TextWriter exp_file = new StreamWriter(@"C:\temp\BalsamoWeb.txt");
+        int _maxIndex;
+        string _errcode;
         
         public void LeerArticulosTauro()
         {
             string path_tauro= @"c:\temp\balsamo.txt";
             _listadoTauro = File.ReadAllLines(path_tauro);
+            _maxIndex = _listadoTauro.Count();
+            
         }
 
         private void btnDescargar_Click(object sender, EventArgs e)
         {
             LeerArticulosTauro();
             Iniciartimer();
-            lblMensaje.Text = "Descarga Finalizada";
         
         }
 
         int _index = 0;
         System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer();
+        System.Windows.Forms.Timer _timer_global = new System.Windows.Forms.Timer();
 
         private void Iniciartimer()
         {
-            _timer.Interval = 15000;
-            _timer.Enabled = true;
-            _timer.Tick += new EventHandler(timer_Tick);
+            _timer_global.Interval = 120000;
+            _timer_global.Enabled = true;
+            _timer_global.Tick += new EventHandler(timer_global_Tick);
         }
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (_index <= 150)
+            if (_index <= 120)//_maxIndex)
             {
                 string _artParam = _listadoTauro[_index].ToString().Trim();
                 var client = new RestClient("http://api.balsamo.com.ar:9086/v1/articulos");
@@ -64,27 +68,23 @@ namespace RS_Tauro
                 string _success = _artweb.success;
 
                 var _errorweb = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(response.Content.ToString());
-                string _errcode = _errorweb.error_code;
+                _errcode = _errorweb.error_code;
                 string _errmsj = _errorweb.error_msg;
 
                 if (_success == "False")
                 {
                     switch (_errcode)
                     {
-                        //case "5002":
-                        //    lblMensaje.Text = _errmsj;
-                        //    break;
-                        //case "5003":
-                        //    lblMensaje.Text = _errmsj;
-                        //    break;
-                        //case "5004":
-                        //    lblMensaje.Text = _errmsj;
-                        //    break;
-                        //case "5005":
-                        //    lblMensaje.Text = _errmsj;
-                        //    break;
-                        case "5006":
+                        case "5004":
+                            exp_file.Close();
+                            _timer.Stop();
                             lblMensaje.Text = _errmsj;
+                            lblMensaje.BackColor = Color.Red;
+                            break;
+                        case "5006":
+                            _timer.Stop();
+                            lblMensaje.Text = _errmsj;
+                            lblMensaje.BackColor = Color.Blue;
                             break;
                     }
                 }
@@ -97,12 +97,34 @@ namespace RS_Tauro
                     string _cost = _artweb.data.costo;
 
 
-                    exp_file.WriteLine(_descrip + ";" + _arti + ";" + _ori + ";" + _rub + ";" + _cost + ";" + Environment.NewLine);
+                    exp_file.WriteLine(_descrip + ";" + _arti + ";" + _ori + ";" + _rub + ";" + _cost + ";");
 
                 }
-                lblMensaje.Text = _index + " articulos importados...";
-                _index++;
+                if (_errcode != "5004")
+                {
+                    lblMensaje.Text = _index + " articulos importados...";
+                    _index++;
+                }
             }
+            else if (_errcode != "5004")
+            {
+                _timer.Stop();
+                exp_file.Close();
+                lblMensaje.Text = "Descarga Finalizada";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _timer.Stop();
+            exp_file.Close();
+        }
+
+        private void timer_global_Tick(object sender, EventArgs e)
+        {
+            _timer.Interval = 10;
+            _timer.Enabled = true;
+            _timer.Tick += new EventHandler(timer_Tick);
         }
     }
 }
