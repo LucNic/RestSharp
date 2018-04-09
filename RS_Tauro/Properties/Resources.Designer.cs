@@ -44,8 +44,8 @@ namespace RS_Tauro.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RS_Tauro.Properties.Resources", typeof(Resources).Assembly);
-                    resourceMan = temp;
+                    global::System.Resources.ResourceManager Tauro_Autopartes = new global::System.Resources.ResourceManager("RS_Tauro.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = Tauro_Autopartes;
                 }
                 return resourceMan;
             }
